@@ -9,6 +9,10 @@ let autoRefreshInterval;
 let currentTrailerLink = '';
 let youtubePlayer = null;
 
+// Telegram link variables
+let currentTelegramLink = '';
+let currentPostTitle = '';
+
 // View tracking variables
 let viewCounts = {};
 let popularPosts = [];
@@ -16,7 +20,7 @@ let viewUpdateQueue = [];
 let isUpdatingViews = false;
 
 // ==================== VIEW TRACKING - PREVENT DUPLICATE ====================
-let viewedPosts = new Set(); // Track which posts have been viewed
+let viewedPosts = new Set();
 let viewQueueProcessing = false;
 
 // ==================== VIDEO PLAYER VARIABLES ====================
@@ -30,7 +34,6 @@ let currentEpisodeVideoUrl = '';
 let currentEpisodeTitle = '';
 
 // ==================== CONSTANT: No Image Placeholder ====================
-// Use SVG data URI to avoid via.placeholder.com connection issues
 const NO_IMAGE_PLACEHOLDER = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"%3E%3Crect width="400" height="300" fill="%23e9ecef"/%3E%3Ctext x="50%25" y="45%25" text-anchor="middle" dy=".3em" font-family="Arial, sans-serif" font-size="20" fill="%23999"%3ENo Image%3C/text%3E%3Ctext x="50%25" y="60%25" text-anchor="middle" dy=".3em" font-family="Arial, sans-serif" font-size="14" fill="%23b0b0b0"%3ENot Available%3C/text%3E%3C/svg%3E';
 
 const NO_IMAGE_SMALL = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200" viewBox="0 0 400 200"%3E%3Crect width="400" height="200" fill="%23f0f0f0"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" font-family="Arial" font-size="16" fill="%23999"%3ENo Image%3C/text%3E%3C/svg%3E';
@@ -55,6 +58,45 @@ function convertGoogleDriveUrlToThumbnail(url) {
   }
   
   return url;
+}
+
+// ==================== TELEGRAM FUNCTIONS ====================
+
+/**
+ * Open Telegram link in new tab
+ */
+function openTelegramLink() {
+  if (!currentTelegramLink || currentTelegramLink.trim() === '') {
+    showNotification('No Telegram link available for this post', 'warning');
+    return;
+  }
+  
+  // Open in new tab
+  window.open(currentTelegramLink, '_blank', 'noopener,noreferrer');
+}
+
+/**
+ * Display Telegram button on single post page (NO BOX - only button)
+ * @param {string} telegramLink - The Telegram post link
+ * @param {string} postTitle - The post title for display
+ */
+function displayTelegramSection(telegramLink, postTitle) {
+  const telegramBtn = document.getElementById('singlePostTelegramBtn');
+  
+  currentTelegramLink = telegramLink || '';
+  currentPostTitle = postTitle || '';
+  
+  // Check if telegram link exists
+  const hasTelegramLink = telegramLink && telegramLink.trim() !== '';
+  
+  // Show/hide the telegram button only (no box)
+  if (hasTelegramLink && telegramBtn) {
+    telegramBtn.style.display = 'inline-block';
+  } else {
+    if (telegramBtn) {
+      telegramBtn.style.display = 'none';
+    }
+  }
 }
 
 // ==================== AD MANAGEMENT SYSTEM ====================
@@ -248,7 +290,6 @@ function displayEpisodes(post) {
   const episodesGrid = document.getElementById('episodesGrid');
   const episodeCountBadge = document.getElementById('episodeCountBadge');
   
-  // Check if this is a series with episodes
   const contentType = post.ContentType || 'movie';
   let episodes = [];
   
@@ -271,7 +312,6 @@ function displayEpisodes(post) {
   episodesSection.style.display = 'block';
   episodeCountBadge.textContent = `${episodes.length} Episodes`;
   
-  // Sort episodes by episode number
   episodes.sort((a, b) => (a.episode || a.Episode || 0) - (b.episode || b.Episode || 0));
   
   let html = '';
@@ -295,7 +335,7 @@ function displayEpisodes(post) {
 }
 
 /**
- * Play episode in the video player (In-Page)
+ * Play episode in the video player
  */
 function playEpisode(videoUrl, episodeTitle) {
   if (!videoUrl || videoUrl === '#') {
@@ -303,16 +343,13 @@ function playEpisode(videoUrl, episodeTitle) {
     return;
   }
   
-  // Store episode video info
   currentEpisodeVideoUrl = videoUrl;
   currentEpisodeTitle = episodeTitle || 'Episode';
-  
-  // Open video player with the episode link
   openEpisodeVideoPlayer(videoUrl, episodeTitle);
 }
 
 /**
- * Open video player specifically for episode (In-Page)
+ * Open video player specifically for episode
  */
 function openEpisodeVideoPlayer(videoUrl, episodeTitle) {
   const videoContainer = document.getElementById('videoPlayerContainer');
@@ -323,15 +360,13 @@ function openEpisodeVideoPlayer(videoUrl, episodeTitle) {
     return;
   }
   
-  // Close any existing trailer
   closeTrailer();
   
   videoContainer.style.display = 'block';
   videoPlayer.innerHTML = '';
   
-  // Add episode title above player
   const titleHtml = `
-    <div class="episode-player-title" style="color:#fff; padding:10px 16px; background:rgba(0,0,0,0.6); font-weight:600; font-size:1rem; border-bottom:2px solid var(--series-color);">
+    <div class="episode-player-title">
       <i class="fas fa-play-circle text-success me-2"></i>${episodeTitle || 'Episode'}
     </div>
   `;
@@ -342,7 +377,6 @@ function openEpisodeVideoPlayer(videoUrl, episodeTitle) {
     videoPlayer.innerHTML = titleHtml + embedHtml;
     videoContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
   } else {
-    // If can't embed, show a fallback with direct link
     videoPlayer.innerHTML = `
       <div class="video-loading" style="min-height:200px;">
         <i class="fas fa-external-link-alt fa-3x text-warning mb-3"></i>
@@ -373,7 +407,6 @@ function openVideoPlayer() {
     return;
   }
   
-  // Close any existing trailer
   closeTrailer();
   
   videoContainer.style.display = 'block';
@@ -401,7 +434,6 @@ function openVideoPlayer() {
 function getVideoEmbedHtml(url) {
   if (!url) return null;
   
-  // YouTube
   const youtubeMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
   if (youtubeMatch) {
     const videoId = youtubeMatch[1];
@@ -410,7 +442,6 @@ function getVideoEmbedHtml(url) {
             allowfullscreen></iframe>`;
   }
   
-  // Fembed
   const fembedMatch = url.match(/fembed\.(?:com|net|co|to)\/embed\/([a-zA-Z0-9_-]+)/);
   if (fembedMatch) {
     const videoId = fembedMatch[1];
@@ -419,14 +450,12 @@ function getVideoEmbedHtml(url) {
             allowfullscreen></iframe>`;
   }
   
-  // Vidoza
   if (url.includes('vidoza.net')) {
     return `<iframe src="${url}" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
             allowfullscreen></iframe>`;
   }
   
-  // MP4 direct link
   if (url.match(/\.(mp4|webm|ogg|mov)$/i)) {
     return `<video controls autoplay style="width:100%;height:100%;background:#000;">
             <source src="${url}" type="video/mp4">
@@ -434,7 +463,6 @@ function getVideoEmbedHtml(url) {
             </video>`;
   }
   
-  // Generic iframe
   if (url.includes('embed') || url.includes('iframe')) {
     return `<iframe src="${url}" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -478,22 +506,19 @@ function isValidVideoUrl(url) {
   return videoPatterns.some(pattern => pattern.test(url));
 }
 
-// ==================== VIEW TRACKING FUNCTIONS (FIXED - PREVENT DUPLICATE) ====================
+// ==================== VIEW TRACKING FUNCTIONS ====================
 
 /**
  * Track post view - prevents duplicate views
- * Only counts once per post per page load
  */
 function trackPostView(postId) {
   if (!postId) return;
   
-  // Check if this post has already been viewed in this session
   if (viewedPosts.has(postId)) {
     console.log(`[View] Post ${postId} already counted, skipping`);
     return;
   }
   
-  // Mark as viewed
   viewedPosts.add(postId);
   
   console.log(`[View] Tracking post ${postId}`);
@@ -527,7 +552,6 @@ function processViewQueue() {
     viewGroups[postId] = (viewGroups[postId] || 0) + 1; 
   });
   
-  // Clear queue immediately to prevent duplicates
   viewUpdateQueue = [];
   
   const promises = Object.keys(viewGroups).map(postId => incrementServerViewCount(postId, viewGroups[postId]));
@@ -744,7 +768,6 @@ function createPostCard(post) {
   const hotBadge = isHotPost ? `<div class="hot-card-badge"><i class="fa-solid fa-fire-flame-curved"></i> HOT</div>` : '';
   const viewBadge = post.Views > 0 ? `<div class="view-count-badge" title="${post.Views} views"><i class="fas fa-eye me-1"></i>${formatViewCount(post.Views)}</div>` : '';
   
-  // Use local placeholder instead of via.placeholder.com
   const imageUrl = post.ImageURL || NO_IMAGE_PLACEHOLDER;
   
   col.innerHTML = `<div class="post-card">${contentTypeDisplay}${hotBadge}${viewBadge}<img src="${imageUrl}" class="post-img" alt="${post.Title || 'Post Image'}" onerror="this.src='${NO_IMAGE_PLACEHOLDER}'"><div class="card-body"><h5 class="post-title">${post.Title || 'Untitled Post'}</h5>${ratingStars ? `<div class="post-rating mb-2">${ratingStars}</div>` : ''}${genreBadges ? `<div class="post-genres mb-2">${genreBadges}</div>` : ''}<div class="truncate">${textPreview || 'No content available'}</div><div class="post-meta"><i class="far fa-calendar me-1"></i> ${displayDate}${isHotPost ? '<i class="fa-solid fa-fire-flame-curved text-danger ms-2" title="HOT"></i>' : ''}<span class="ms-2 text-info" title="${post.Views || 0} views"><i class="fas fa-eye me-1"></i>${post.Views || 0}</span></div><div class="d-flex flex-wrap gap-2"><a href="?post=${post.ID}" class="btn btn-primary btn-custom btn-primary-custom btn-sm" onclick="handleWatchNowClick('${post.ID}')"><i class="fas fa-play-circle me-1"></i>Watch Now</a><button class="btn btn-secondary btn-custom btn-secondary-custom btn-sm" onclick="sharePost('${post.ID}')"><i class="fas fa-share-alt me-1"></i>Share</button></div></div></div>`;
@@ -753,7 +776,6 @@ function createPostCard(post) {
 
 // ==================== Handle Watch Now Click ====================
 async function handleWatchNowClick(postId) {
-  // Track view - will only count once
   trackPostView(postId);
   showNotification('Loading content...', 'info');
   
@@ -822,10 +844,12 @@ function displaySinglePostDirectly(post) {
   // ===== DISPLAY EPISODES FOR SERIES =====
   displayEpisodes(post);
   
+  // ===== DISPLAY TELEGRAM BUTTON (NO BOX) =====
+  displayTelegramSection(post.TelegramPostLink, post.Title);
+  
   // ===== VIDEO PLAYER SETUP =====
   currentVideoUrl = post.DownloadLink || '';
   const watchBtn = document.getElementById('singlePostWatchBtn');
-  const watchLink = document.getElementById('singlePostWatch');
   const videoContainer = document.getElementById('videoPlayerContainer');
   
   if (videoContainer) {
@@ -833,18 +857,15 @@ function displaySinglePostDirectly(post) {
     document.getElementById('videoPlayer').innerHTML = '';
   }
   
+  // Show Watch Button if Movie Link exists
   if (currentVideoUrl && currentVideoUrl.trim() !== '') {
     if (isValidVideoUrl(currentVideoUrl)) {
       watchBtn.style.display = 'inline-block';
-      watchLink.style.display = 'none';
     } else {
       watchBtn.style.display = 'none';
-      watchLink.style.display = 'inline-block';
-      watchLink.href = currentVideoUrl;
     }
   } else {
     watchBtn.style.display = 'none';
-    watchLink.style.display = 'none';
   }
   
   // Add view count
@@ -975,21 +996,13 @@ function clearSearch() { const searchInput = document.getElementById('searchInpu
 
 // ==================== AUTO-REFRESH FUNCTIONS ====================
 
-/**
- * Start auto-refresh interval (1 minute = 60000 ms)
- * Silently fetches new posts without page reload
- */
 function startAutoRefresh() {
   if (autoRefreshInterval) clearInterval(autoRefreshInterval);
   autoRefreshInterval = setInterval(() => {
     silentRefreshPosts();
-  }, 60000); // 1 minute
+  }, 60000);
 }
 
-/**
- * Silent refresh - fetches new posts without reloading the page
- * Shows notification only if new posts are found
- */
 async function silentRefreshPosts() {
   try {
     const response = await fetch(`${API_URL}?action=getPosts&from=mmovie.site`);
@@ -998,49 +1011,38 @@ async function silentRefreshPosts() {
     const newPosts = await response.json();
     if (!Array.isArray(newPosts)) return;
     
-    // Sort new posts
     const sortedNew = [...newPosts].sort((a, b) => new Date(b.CreatedAt) - new Date(a.CreatedAt));
     const sortedOld = [...allPosts].sort((a, b) => new Date(b.CreatedAt) - new Date(a.CreatedAt));
     
-    // Check if there are new posts (by comparing IDs)
     const oldIds = new Set(sortedOld.map(p => p.ID));
     const newPostIds = sortedNew.filter(p => !oldIds.has(p.ID));
     
     if (newPostIds.length > 0) {
-      // Update data
       allPosts = sortedNew;
       postsCache = allPosts;
       
-      // Update genre lists
       extractAllGenres();
       populateGenreDropdown();
       
-      // Update counts
       countContentTypePosts();
       updateContentTypeCounts();
       
-      // Check if we're on the main page (not single post)
       const isMainPage = document.getElementById('mainPage').style.display !== 'none';
       
       if (isMainPage) {
-        // Check current view mode
         const isFilteredView = document.getElementById('filteredView').style.display === 'block';
         const isContentTypeView = document.getElementById('contentTypeSections').style.display !== 'none';
         
         if (isFilteredView) {
-          // If in filtered view, re-apply filters
           applyFilters();
         } else if (isContentTypeView) {
-          // If in content type sections, reload sections
           loadContentTypeSections();
           loadHotFeaturedContent();
         } else {
-          // Fallback - reload everything
           loadContentTypeSections();
           loadHotFeaturedContent();
         }
         
-        // Show notification
         showNewPostNotification(newPostIds.length);
       }
     }
@@ -1049,11 +1051,7 @@ async function silentRefreshPosts() {
   }
 }
 
-/**
- * Show new post notification with dismiss option
- */
 function showNewPostNotification(count) {
-  // Remove existing notifications
   document.querySelectorAll('.new-post-notification').forEach(notif => notif.remove());
   
   const notification = document.createElement('div');
@@ -1083,7 +1081,6 @@ function showNewPostNotification(count) {
   
   document.body.appendChild(notification);
   
-  // Auto dismiss after 8 seconds
   setTimeout(() => {
     if (notification.parentElement) {
       notification.classList.remove('show');
@@ -1092,23 +1089,15 @@ function showNewPostNotification(count) {
   }, 8000);
 }
 
-/**
- * Manual refresh - called when user clicks "Refresh Now"
- */
 function refreshPosts() {
-  // Remove notification
   document.querySelectorAll('.new-post-notification').forEach(notif => notif.remove());
-  
-  // Show loading indicator
   showNotification('Refreshing content...', 'info');
   
-  // Perform full refresh
   const isMainPage = document.getElementById('mainPage').style.display !== 'none';
   
   if (isMainPage) {
     loadPosts();
   } else {
-    // If on single post page, reload the post
     const urlParams = new URLSearchParams(window.location.search);
     const postId = urlParams.get('post');
     if (postId) {
@@ -1119,14 +1108,9 @@ function refreshPosts() {
   }
 }
 
-// ==================== CHECK FOR NEW POSTS (Legacy - kept for compatibility) ====================
 async function checkForNewPosts() {
-  // This is now handled by silentRefreshPosts()
   await silentRefreshPosts();
 }
-
-// ==================== START AUTO-REFRESH ON MAIN PAGE ====================
-// Modified startAutoRefresh is called from checkPageType()
 
 function checkPageType() { 
   const urlParams = new URLSearchParams(window.location.search); 
@@ -1137,7 +1121,6 @@ function checkPageType() {
     document.getElementById('mainPage').style.display = 'none'; 
     document.getElementById('singlePostPage').style.display = 'block'; 
     loadSinglePost(postId); 
-    // View is tracked inside handleWatchNowClick
     if (autoRefreshInterval) clearInterval(autoRefreshInterval); 
   } else { 
     document.getElementById('mainPage').style.display = 'block'; 
@@ -1159,22 +1142,15 @@ function renderPagination() { const pagination = document.getElementById("pagina
 function navigateToPage(page) { if (page === "prev") { if (currentPage > 1) currentPage--; } else if (page === "next") { const postsToShow = filteredPosts; const totalPages = Math.ceil(postsToShow.length / postsPerPage); if (currentPage < totalPages) currentPage++; } else currentPage = parseInt(page); const url = new URL(window.location); url.searchParams.set('page', currentPage); window.history.pushState({}, '', url); renderPosts(currentPage); renderPagination(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
 function loadSinglePost(postId) { 
-  // Track view - will only count once
   trackPostView(postId);
-  // Then load the post
   handleWatchNowClick(postId); 
 }
 
 function showPostNotFound() { document.getElementById('singlePostPage').innerHTML = `<div class="container my-5"><div class="single-post-container text-center py-5"><i class="fas fa-exclamation-triangle fa-4x text-warning mb-4"></i><h2>Post Not Found</h2><p class="mb-4">The post you're looking for doesn't exist or has been removed.</p><a href="?" class="btn btn-primary btn-custom btn-primary-custom"><i class="fas fa-arrow-left me-2"></i>Back to Posts</a></div></div>`; }
 
-// ==================== SHARE FUNCTIONS (FIXED) ====================
+// ==================== SHARE FUNCTIONS ====================
 
-/**
- * Share a specific post
- * @param {string} postId - The ID of the post to share
- */
 function sharePost(postId) { 
-  // Get current post ID from URL if not provided
   if (!postId) {
     const urlParams = new URLSearchParams(window.location.search);
     postId = urlParams.get('post');
@@ -1184,20 +1160,15 @@ function sharePost(postId) {
     }
   }
   
-  // Try to find the post in cache first
   let post = postsCache.find(p => p.ID == postId);
-  
-  // If not found in cache, try allPosts
   if (!post) {
     post = allPosts.find(p => p.ID == postId);
   }
   
-  // If still not found, try to get from the current page display
   if (!post) {
     const urlParams = new URLSearchParams(window.location.search);
     const currentPostId = urlParams.get('post');
     if (currentPostId == postId) {
-      // We're on the single post page - get data from the page
       const titleEl = document.getElementById('singlePostTitle');
       const contentEl = document.getElementById('singlePostContent');
       const imgEl = document.getElementById('singlePostImage');
@@ -1214,7 +1185,6 @@ function sharePost(postId) {
     }
   }
   
-  // If post still not found, create basic share with ID only
   if (!post) {
     console.warn('Post not found in cache, sharing with ID only');
     post = { Title: 'M-Movie', Paragraph: '' };
@@ -1224,48 +1194,34 @@ function sharePost(postId) {
   const shareTitle = post.Title || 'M-Movie';
   const shareText = stripHtml(post.Paragraph || '').substring(0, 100) + '...';
   
-  // Use Web Share API if available (mobile)
   if (navigator.share) {
     navigator.share({
       title: shareTitle,
       text: shareText,
       url: shareUrl
     }).catch(err => {
-      // User cancelled share dialog - ignore
       if (err.name !== 'AbortError') {
         console.error('Share error:', err);
         fallbackCopyShare(shareUrl);
       }
     });
   } else {
-    // Fallback: Copy to clipboard
     fallbackCopyShare(shareUrl);
   }
 }
 
-/**
- * Fallback copy to clipboard with prompt fallback
- * @param {string} shareUrl - The URL to copy/share
- */
 function fallbackCopyShare(shareUrl) {
-  // Try clipboard API first
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(shareUrl)
       .then(() => showNotification('Link copied to clipboard!', 'success'))
       .catch(() => {
-        // If clipboard fails, show prompt with link
         prompt("Copy this link to share:", shareUrl);
       });
   } else {
-    // Fallback: Show prompt with link
     prompt("Copy this link to share:", shareUrl);
   }
 }
 
-/**
- * Share current post (called from single post page)
- * This function gets the post ID from URL and calls sharePost
- */
 function shareCurrentPost() {
   const urlParams = new URLSearchParams(window.location.search);
   const postId = urlParams.get('post');
@@ -1273,7 +1229,6 @@ function shareCurrentPost() {
   if (postId) {
     sharePost(postId);
   } else {
-    // If no post ID, share current page URL
     const shareUrl = window.location.href;
     const shareTitle = document.title || 'M-Movie';
     

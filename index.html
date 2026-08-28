@@ -349,6 +349,7 @@
           </div>
           <!-- ===== END EPISODES SECTION ===== -->
           
+          
           <!-- Trailer Container -->
           <div id="trailerContainer" class="trailer-container" style="display: none;">
             <div class="trailer-header">
@@ -403,16 +404,15 @@
               <i class="fas fa-play-circle me-2"></i>ဇာတ်လမ်း Trailer
             </button>
             
-            <!-- Watch Now Button -->
+            <!-- Watch Now Button (Movie Link) -->
             <button id="singlePostWatchBtn" class="btn btn-success btn-custom btn-success-custom" onclick="openVideoPlayer()" style="display: none;">
               <i class="fas fa-play me-2"></i>ဇာတ်ကားကြည့်ရန်
             </button>
             
-            <!-- Fallback: Direct Link -->
-            <a id="singlePostWatch" class="btn btn-success btn-custom btn-success-custom" target="_blank" rel="noopener noreferrer" style="display: none;">
-              <!-- <i class="fas fa-external-link-alt me-2"></i>Open Link -->
-              <i class="fa-brands fa-telegram me-2"></i>Telegram Channel တွင်ကြည့်ရန်နှိပ်ပါ
-            </a>
+            <!-- Telegram Button (NEW - Always shows if TelegramPostLink exists) -->
+            <button id="singlePostTelegramBtn" class="btn btn-telegram btn-custom" onclick="openTelegramLink()" style="display: none;">
+              <i class="fa-brands fa-telegram me-2"></i>Telegram Channelတွင်ကြည့်ရန်
+            </button>
             
             <!-- Share Button -->
             <button class="btn btn-primary btn-custom btn-primary-custom" onclick="shareCurrentPost()">
