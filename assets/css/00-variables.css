@@ -1,0 +1,17 @@
+:root {
+  --primary-color: #4361ee;
+  --secondary-color: #3f37c9;
+  --accent-color: #4cc9f0;
+  --warning-color: #f39c12;
+  --danger-color: #e74c3c;
+  --purple-color: #6f42c1;
+  --movie-color: #4361ee;
+  --series-color: #27ae60;
+  --animation-color: #f39c12;
+  --telegram-color: #0088cc;
+  --text-dark: #2b2d42;
+  --text-light: #8d99ae;
+  --bg-light: #f8f9fa;
+  --card-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  --hover-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}

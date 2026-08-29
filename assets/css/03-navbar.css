@@ -1,0 +1,54 @@
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.navbar-custom {
+  background: rgba(4, 15, 34, 0.615);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.mk-nav {
+  color: white;
+}
+
+.mk-nav:hover {
+  color: rgb(58, 252, 28);
+}
+
+.navbar-toggler {
+  border-color: rgba(255,255,255,0.8);
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.page-title {
+  font-weight: 700;
+  color: white;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 2rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  animation: float 3s ease-in-out infinite;
+}
+
+.page-title:after {
+  content: '';
+  position: absolute;
+  width: 60%;
+  height: 4px;
+  background: white;
+  bottom: -10px;
+  left: 20%;
+  border-radius: 2px;
+}

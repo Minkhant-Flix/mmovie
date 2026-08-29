@@ -1,0 +1,257 @@
+@media (max-width: 992px) {
+  .search-filter-container {
+    flex-wrap: wrap;
+  }
+  .content-type-filter-btn,
+  .genre-filter-btn,
+  .btn-hot-filter {
+    margin-bottom: 0.5rem;
+  }
+  #hotFeaturedSection {
+    padding: 1.5rem;
+  }
+  .section-header h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .page-title {
+    font-size: 1.75rem;
+  }
+  .post-card {
+    margin-bottom: 1.5rem;
+  }
+  .single-post-actions {
+    flex-direction: column;
+  }
+  .single-post-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .pagination .page-link {
+    padding: 0.375rem 0.5rem;
+    font-size: 0.875rem;
+  }
+  .search-container {
+    max-width: 100%;
+    margin-bottom: 1rem;
+  }
+  .navbar-collapse {
+    padding-top: 1rem;
+  }
+  .trailer-header {
+    padding: 0.75rem 1rem;
+  }
+  .trailer-header h3 {
+    font-size: 1.1rem;
+  }
+  .genres-container,
+  .rating-container {
+    padding: 1rem;
+  }
+  .rating-display {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .content-type-filter-btn,
+  .genre-filter-btn,
+  .btn-hot-filter {
+    margin-bottom: 0.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+  .content-type-dropdown-menu,
+  .genre-dropdown-menu {
+    width: 100%;
+    position: absolute;
+    left: 0 !important;
+    right: 0 !important;
+  }
+  #activeFilters .alert {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  #activeFilters .btn {
+    margin-top: 0.5rem;
+    margin-left: 0 !important;
+  }
+  .rating-stars {
+    gap: 0.1rem;
+    font-size: 1.1rem;
+  }
+  .rating-mini .stars-row {
+    gap: 0.1rem;
+    font-size: 0.65rem;
+  }
+  .rating-mini .rating-number {
+    font-size: 0.7rem;
+  }
+  .hot-card-badge {
+    font-size: 0.6rem;
+    padding: 0.2rem 0.4rem;
+    top: 8px;
+    right: 8px;
+  }
+  .post-content-type i {
+    width: 28px;
+    height: 28px;
+    font-size: 0.7rem;
+  }
+  .view-count-badge {
+    top: 8px;
+    left: 45px;
+    font-size: 0.6rem;
+    padding: 0.2rem 0.4rem;
+  }
+  .view-count-display {
+    padding: 1rem;
+  }
+  .view-count-display h4 {
+    font-size: 1.1rem;
+  }
+  .view-count-number .display-4 {
+    font-size: 2rem;
+  }
+  .popular-post-item {
+    padding: 0.5rem;
+  }
+  .popular-post-rank {
+    font-size: 1rem;
+    min-width: 25px;
+  }
+  .popular-post-title {
+    font-size: 0.8rem;
+  }
+  .video-wrapper {
+    padding-bottom: 56.25%;
+  }
+  .video-controls {
+    padding: 0.4rem 0.75rem;
+  }
+  .video-controls .btn {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.75rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .content-type-filter-btn,
+  .genre-filter-btn,
+  .btn-hot-filter {
+    font-size: 0.875rem;
+    padding: 0.375rem 0.75rem;
+  }
+  .search-input {
+    font-size: 0.875rem;
+  }
+  .rating-stars {
+    font-size: 1rem;
+  }
+  .rating-text {
+    font-size: 1rem;
+  }
+  #hotFeaturedSection {
+    padding: 1rem;
+  }
+  .section-header h2 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .post-col {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .pagination-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+  .page-link {
+    padding: 0.375rem 0.5rem;
+  }
+}
+
+.empty-state {
+  padding: 4rem 1rem;
+  width: 100%;
+}
+
+.empty-state h3 {
+  margin-bottom: 1rem;
+}
+
+.empty-state i {
+  opacity: 0.7;
+}
+
+.social-links a {
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.social-links a:hover {
+  transform: translateY(-3px);
+  color: var(--accent-color) !important;
+}
+
+.search-filter-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .search-filter-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-filter-container > * {
+    margin-bottom: 0.5rem;
+    width: 100%;
+  }
+  .search-filter-container > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 50px;
+  height: 50px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+.version_control {
+  color: rgb(0, 238, 251);
+}

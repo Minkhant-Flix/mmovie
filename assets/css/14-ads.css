@@ -1,0 +1,81 @@
+/* ==================== AD MODAL STYLES ==================== */
+.ad-modal .modal-content {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.ad-modal .modal-body {
+  background: transparent;
+  padding: 0;
+}
+
+.ad-modal-content {
+  background: transparent !important;
+}
+
+.ad-link {
+  display: block;
+  cursor: pointer;
+}
+
+.ad-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #000;
+}
+
+.ad-close-container {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 10;
+}
+
+.ad-close-btn {
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  padding: 8px 20px;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.ad-close-btn:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.05);
+}
+
+.ad-timer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  backdrop-filter: blur(5px);
+  z-index: 10;
+}
+
+@media (max-width: 576px) {
+  .ad-image {
+    max-height: 300px;
+  }
+  .ad-close-btn {
+    padding: 6px 16px;
+    font-size: 14px;
+  }
+  .ad-timer {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+}

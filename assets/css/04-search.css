@@ -1,0 +1,33 @@
+.search-container {
+  max-width: 300px;
+}
+
+.search-input {
+  border-radius: 20px 0 0 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  backdrop-filter: blur(10px);
+}
+
+.search-input:focus {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.1);
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.search-btn {
+  border-radius: 0 20px 20px 0;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-left: none;
+}
+
+.search-clear {
+  border-radius: 20px;
+  margin-left: 5px;
+}

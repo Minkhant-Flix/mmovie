@@ -1,0 +1,250 @@
+/* ==================== TELEGRAM BUTTON STYLES ==================== */
+.btn-telegram {
+  background: linear-gradient(90deg, #0088cc, #00a3e0);
+  color: white;
+  border: none;
+  font-weight: 600;
+  padding: 0.6rem 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
+}
+
+.btn-telegram:hover {
+  background: linear-gradient(90deg, #00a3e0, #0088cc);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 136, 204, 0.4);
+  color: white;
+}
+
+.btn-telegram i {
+  font-size: 1.1rem;
+}
+
+/* ==================== AD MODAL STYLES ==================== */
+.ad-modal .modal-content {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.ad-modal .modal-body {
+  background: transparent;
+  padding: 0;
+}
+
+.ad-modal-content {
+  background: transparent !important;
+}
+
+.ad-link {
+  display: block;
+  cursor: pointer;
+}
+
+.ad-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #000;
+}
+
+.ad-close-container {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 10;
+}
+
+.ad-close-btn {
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  padding: 8px 20px;
+  font-weight: 600;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.ad-close-btn:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.05);
+}
+
+.ad-timer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  backdrop-filter: blur(5px);
+  z-index: 10;
+}
+
+@media (max-width: 576px) {
+  .ad-image {
+    max-height: 300px;
+  }
+  .ad-close-btn {
+    padding: 6px 16px;
+    font-size: 14px;
+  }
+  .ad-timer {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+}
+
+/* ==================== CONTENT TYPE STYLES ==================== */
+.content-type-filter-btn {
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  backdrop-filter: blur(10px);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.content-type-filter-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.content-type-filter-btn.show {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.content-type-dropdown-menu {
+  background: rgba(4, 15, 34, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  min-width: 220px;
+}
+
+.content-type-dropdown-menu .dropdown-item {
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem 1rem;
+  transition: all 0.2s ease;
+  border-radius: 5px;
+  margin: 2px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.content-type-dropdown-menu .dropdown-item:hover {
+  background: rgba(67, 97, 238, 0.3);
+  color: white;
+  transform: translateX(5px);
+}
+
+.content-type-dropdown-menu .dropdown-item.active {
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  color: white;
+}
+
+.content-type-dropdown-menu .dropdown-divider {
+  border-color: rgba(255, 255, 255, 0.1);
+  margin: 0.5rem 0;
+}
+
+.content-type-count {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.1rem 0.4rem;
+  border-radius: 10px;
+  min-width: 24px;
+  text-align: center;
+}
+
+.content-type-badge {
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.content-type-badge.movie {
+  background: linear-gradient(90deg, rgba(67, 97, 238, 0.1), rgba(63, 55, 201, 0.1));
+  color: var(--movie-color);
+  border: 1px solid var(--movie-color);
+}
+
+.content-type-badge.series {
+  background: linear-gradient(90deg, rgba(39, 174, 96, 0.1), rgba(33, 150, 83, 0.1));
+  color: var(--series-color);
+  border: 1px solid var(--series-color);
+}
+
+.content-type-badge.animation {
+  background: linear-gradient(90deg, rgba(243, 156, 18, 0.1), rgba(230, 126, 34, 0.1));
+  color: var(--animation-color);
+  border: 1px solid var(--animation-color);
+}
+
+.content-type-badge i {
+  font-size: 0.9em;
+}
+
+.content-type-section {
+  animation: fadeInUp 0.5s ease;
+}
+
+.section-header {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.5rem;
+}
+
+.section-header h2 {
+  font-weight: 700;
+  font-size: 1.75rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.post-content-type {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+}
+
+.post-content-type i {
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.post-content-type.movie i {
+  background: rgba(67, 97, 238, 0.9);
+}
+
+.post-content-type.series i {
+  background: rgba(39, 174, 96, 0.9);
+}
+
+.post-content-type.animation i {
+  background: rgba(243, 156, 18, 0.9);
+}

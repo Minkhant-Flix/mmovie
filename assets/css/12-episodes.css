@@ -1,0 +1,264 @@
+/* ==================== EPISODES SECTION ==================== */
+.episodes-section {
+  background: rgba(248, 249, 250, 0.95);
+  border-radius: 16px;
+  border: 2px solid #e9ecef;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 1.5rem;
+}
+
+.episodes-header {
+  background: linear-gradient(90deg, var(--series-color), #1e7e34);
+  color: white;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.episodes-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.episode-count-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.episodes-grid {
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.episode-card {
+  background: white;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 1px solid #e9ecef;
+}
+
+.episode-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  border-color: var(--series-color);
+}
+
+.episode-number {
+  font-weight: 600;
+  color: var(--text-dark);
+  font-size: 0.95rem;
+}
+
+.episode-number i {
+  color: var(--series-color);
+  margin-right: 0.5rem;
+}
+
+.episode-watch-btn {
+  background: var(--series-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.episode-watch-btn:hover {
+  background: #1e7e34;
+  transform: scale(1.05);
+  color: white;
+}
+
+.episode-watch-btn i {
+  margin-right: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  .episodes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    padding: 1rem;
+  }
+  .episode-card {
+    padding: 0.6rem 0.8rem;
+  }
+  .episode-number {
+    font-size: 0.85rem;
+  }
+  .episode-watch-btn {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .episodes-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .episodes-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+    padding: 0.75rem 1rem;
+  }
+  .episodes-header h3 {
+    font-size: 1.1rem;
+  }
+}
+
+/* ==================== EPISODE WATCH BUTTON STYLES ==================== */
+
+.episode-watch-btn {
+  background: var(--series-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.episode-watch-btn:hover {
+  background: #1e7e34;
+  transform: scale(1.05);
+  color: white;
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+}
+
+.episode-watch-btn i {
+  font-size: 0.7rem;
+}
+
+.episode-card {
+  background: white;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 1px solid #e9ecef;
+}
+
+.episode-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  border-color: var(--series-color);
+}
+
+.episode-number {
+  font-weight: 600;
+  color: var(--text-dark);
+  font-size: 0.95rem;
+}
+
+.episode-number i {
+  color: var(--series-color);
+  margin-right: 0.5rem;
+}
+
+.episode-player-title {
+  color: #fff;
+  padding: 10px 16px;
+  background: rgba(0, 0, 0, 0.6);
+  font-weight: 600;
+  font-size: 1rem;
+  border-bottom: 2px solid var(--series-color);
+}
+
+/* ==================== EPISODES SECTION ==================== */
+.episodes-section {
+  background: rgba(248, 249, 250, 0.95);
+  border-radius: 16px;
+  border: 2px solid #e9ecef;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 1.5rem;
+}
+
+.episodes-header {
+  background: linear-gradient(90deg, var(--series-color), #1e7e34);
+  color: white;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.episodes-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.episode-count-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.episodes-grid {
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .episodes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    padding: 1rem;
+  }
+  .episode-card {
+    padding: 0.6rem 0.8rem;
+  }
+  .episode-number {
+    font-size: 0.85rem;
+  }
+  .episode-watch-btn {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .episodes-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .episodes-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+    padding: 0.75rem 1rem;
+  }
+  .episodes-header h3 {
+    font-size: 1.1rem;
+  }
+}

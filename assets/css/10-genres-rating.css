@@ -1,0 +1,141 @@
+.genres-container {
+  background: rgba(248, 249, 250, 0.9);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.genres-container h4 {
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.genres-container h4 i {
+  color: var(--purple-color);
+}
+
+.genres-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.genre-tag {
+  background: linear-gradient(90deg, var(--purple-color), #9d4edd);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(111, 66, 193, 0.2);
+  transition: all 0.2s ease;
+}
+
+.genre-tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(111, 66, 193, 0.3);
+}
+
+.post-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.genre-badge {
+  background: linear-gradient(90deg, #6f42c1, #9d4edd);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.genre-badge:last-child {
+  background: linear-gradient(90deg, #495057, #6c757d);
+}
+
+/* ==================== RATING ==================== */
+.rating-container {
+  background: rgba(248, 249, 250, 0.9);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.rating-container h4 {
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.rating-container h4 i {
+  color: #ffc107;
+}
+
+.rating-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 0.15rem;
+  font-size: 1.3rem;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 0.25rem;
+}
+
+.rating-star {
+  display: inline-block;
+}
+
+.rating-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  text-align: center;
+  width: 100%;
+}
+
+.rating-mini {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.rating-mini .stars-row {
+  display: flex;
+  gap: 0.08rem;
+  font-size: 0.7rem;
+  margin-bottom: 0.1rem;
+}
+
+.rating-mini .rating-number {
+  font-size: 0.75rem;
+  color: #6c757d;
+  text-align: center;
+}
+
+.rating-mini i {
+  color: #ffc107;
+}
+
+.post-rating {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
